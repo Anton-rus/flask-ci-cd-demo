@@ -42,5 +42,5 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t 172.18.247.247:443/flask-ci-cd-demo:latest .
-          docker push 172.18.247.247:443/flask-ci-cd-demo:latest
+          docker build -t dock01:443/flask-ci-cd-demo:latest .
+          docker push dock01:443/flask-ci-cd-demo:latest
