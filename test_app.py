@@ -11,4 +11,4 @@ def client():
 def test_hello(client):
     response = client.get('/')
     assert response.status_code == 200
-    assert b"Hello, CI/CD World!" in response.data
+    assert b"Lyagushnis ka!" in response.data
