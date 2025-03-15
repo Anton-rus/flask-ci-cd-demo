@@ -70,10 +70,10 @@ jobs:
 
       - name: Pull Docker image on target machine
         run: |
-          ssh anton@158.160.31.148 "docker pull 158.160.12.251:443/flask-ci-cd-demo:latest"
+          ssh -i ~/.ssh/id_rsa anton@158.160.31.148 "docker pull 158.160.12.251:443/flask-ci-cd-demo:latest"
 
       - name: Deploy Docker image on target machine
         run: |
-          ssh anton@158.160.31.148 "docker stop flask-ci-cd-demo || true"
-          ssh anton@158.160.31.148 "docker rm flask-ci-cd-demo || true"
-          ssh anton@158.160.31.148 "docker run -d -p 5000:5000 --name flask-ci-cd-demo 158.160.12.251:443/flask-ci-cd-demo:latest"
+          ssh -i ~/.ssh/id_rsa anton@158.160.31.148 "docker stop flask-ci-cd-demo || true"
+          ssh -i ~/.ssh/id_rsa anton@158.160.31.148 "docker rm flask-ci-cd-demo || true"
+          ssh -i ~/.ssh/id_rsa anton@158.160.31.148 "docker run -d -p 5000:5000 --name flask-ci-cd-demo 158.160.12.251:443/flask-ci-cd-demo:latest"
