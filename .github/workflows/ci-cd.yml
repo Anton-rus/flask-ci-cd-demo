@@ -52,3 +52,28 @@ jobs:
         run: |
           docker build -t 158.160.12.251:443/flask-ci-cd-demo:latest .
           docker push 158.160.12.251:443/flask-ci-cd-demo:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-push-docker  # Запускать только после успешной сборки и публикации образа
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan 158.160.31.148 >> ~/.ssh/known_hosts
+
+      - name: Pull Docker image on target machine
+        run: |
+          ssh anton@158.160.31.148 "docker pull 158.160.12.251:443/flask-ci-cd-demo:latest"
+
+      - name: Deploy Docker image on target machine
+        run: |
+          ssh anton@158.160.31.148 "docker stop flask-ci-cd-demo || true"
+          ssh anton@158.160.31.148 "docker rm flask-ci-cd-demo || true"
+          ssh anton@158.160.31.148 "docker run -d -p 5000:5000 --name flask-ci-cd-demo 158.160.12.251:443/flask-ci-cd-demo:latest"
