@@ -42,7 +42,7 @@ jobs:
       - name: Add self-signed certificate
         run: |
           sudo mkdir -p /usr/local/share/ca-certificates
-          sudo cp  158.160.12.251.crt /usr/local/share/ca-certificates/
+          sudo cp  ./.docker/158.160.12.251.crt /usr/local/share/ca-certificates/
           sudo update-ca-certificates
 
 
